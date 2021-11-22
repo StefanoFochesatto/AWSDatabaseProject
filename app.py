@@ -39,7 +39,7 @@ app.layout = html.Div([
     Output("map_with_slider", "figure"), 
     [Input("year_slider", "value")])
 def display_map(year):
-        query = 'select FIRE_YEAR,LATITUDE,LONGITUDE from Fires where FIRE_YEAR = {} ORDER BY RAND() limit 500'.format(year)
+        query = 'select FIRE_YEAR,LATITUDE,LONGITUDE from Fires use index(FireYearIndex) where FIRE_YEAR = {} ORDER BY RAND() limit 500'.format(year)
         with engine.connect() as connection:
           result_dataFrame = pd.read_sql(query, connection)
         
