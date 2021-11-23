@@ -9,6 +9,12 @@ from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
 import plotly.graph_objs as go
+from os import environ
+
+AWSKEY = str(environ.get('AWSENGINE'))
+AZUREKEY = str(environ.get('AZUREENGINE'))
+GCPKEY = str(environ.get('GCPENGINE'))
+
 
 ## CSS Style Sheet for Dash Components
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -18,7 +24,7 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 
 ## Make connection to MySQL database, AWS by default
-engine = create_engine("mysql+mysqlconnector://gsfochesatto:Stef129763@awsdatabase.c21iv83neop4.us-east-2.rds.amazonaws.com/FireData")
+engine = create_engine(AWSKEY)
 
 ## dash app layout
 app.layout = html.Div([
@@ -63,11 +69,11 @@ def change_backend(value):
     global engine 
     # if statement to change databases
     if (value == 'AWS'):
-        engine =  create_engine("mysql+mysqlconnector://gsfochesatto:Stef129763@awsdatabase.c21iv83neop4.us-east-2.rds.amazonaws.com/FireData")
+        engine =  create_engine(AWSKEY)
     elif (value == 'AZR'):
-        engine =  create_engine("mysql+mysqlconnector://gsfochesatto@azuredatabasecloudlab:Stef129763@azuredatabasecloudlab.mysql.database.azure.com/FireData")
+        engine =  create_engine(AZUREKEY)
     elif (value == 'GCP'):
-        engine =  create_engine("mysql+mysqlconnector://root:Stef129763@34.72.83.33/FireData")
+        engine =  create_engine(GCPKEY)
     
     return 1
 
