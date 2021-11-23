@@ -48,8 +48,9 @@ app.layout = html.Div([
         ## Graph
         dcc.Graph(
             id='map_with_slider', 
-            style={'width': '100vw', 'height': '80vh', 'textAlign': 'center'}
-            ), 
+            style={'width': '100vw', 'height': '80vh', 'textAlign': 'left', 'font-weight':'300'}
+            ),
+
     ## Year Slider
         dcc.Slider(
             id='year_slider',
@@ -98,7 +99,23 @@ def display_map(extra, year):
         ]
 
         layout = go.Layout(
-          title = '500 Random Fires in the U.S in {}'.format(str(year)), 
+          title = dict(
+            text= '500 Random Fires During {}'.format(year),
+            font=dict(
+                family="Helvetica Neue",
+                size=20,
+                color='#000000'
+                )
+            ),
+
+          margin = dict(
+              autoexpand=True,
+                l=0, #left margin
+                r=0, #right margin
+                b=0, #bottom margin
+                t=50  #top margin
+          ),
+
           geo = dict(
             scope='usa', 
             landcolor='aliceblue', 
@@ -106,6 +123,7 @@ def display_map(extra, year):
             showland = True, 
           )
         )
+
         return {'data':data, 'layout':layout}
 
 
